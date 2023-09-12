@@ -9,9 +9,11 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.server.WebFilterChain;
 
 @Configuration
@@ -21,6 +23,7 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
 
+    private final JwtFilterConfig jwtFilterConfig;
 
     @Bean
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
@@ -33,10 +36,15 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/**",
                                         "/api/auth/**",
+                                        "/api/v1/upload",
                                         "/api/users", "/api/users/**")
-                                    .permitAll()
+                                .permitAll()
                 )
                 .authenticationProvider(authenticationProvider)
+                .sessionManagement(
+                        s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .addFilterBefore(jwtFilterConfig, UsernamePasswordAuthenticationFilter.class)
 
         ;
 

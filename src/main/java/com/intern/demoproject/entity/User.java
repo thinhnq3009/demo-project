@@ -1,6 +1,9 @@
 package com.intern.demoproject.entity;
 
+import com.intern.demoproject.utils.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,6 +36,10 @@ public class User implements UserDetails {
 
     @Column(length = 250)
     private String password;
+
+    @Column(length = 50)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
     @Override

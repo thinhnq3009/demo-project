@@ -1,8 +1,10 @@
 package com.intern.demoproject.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.intern.demoproject.dto.UserDto;
 import com.intern.demoproject.dto.commom.ResponseHandler;
 import com.intern.demoproject.service.UserService;
+import com.intern.demoproject.utils.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,9 +17,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.intern.demoproject.utils.Constants.UserPaths.USER_PATH;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping(USER_PATH)
 @Tag(name = "UserController", description = "Users controller")
 public class UserController {
 
@@ -36,7 +40,7 @@ public class UserController {
                                     mediaType = "application/json")
                     })
     })
-    public ResponseEntity<?> getUser(
+    public ResponseEntity<?> getUsers(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size
     ) {
@@ -79,6 +83,7 @@ public class UserController {
                     )
             )
     })
+
     public ResponseEntity<?> updateUser(
             @PathVariable Long id,
             @RequestBody UserDto userDto

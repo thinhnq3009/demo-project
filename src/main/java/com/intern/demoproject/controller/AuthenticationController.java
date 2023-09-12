@@ -47,6 +47,7 @@ public class AuthenticationController {
             )
 
     })
+
     public ResponseEntity<?> login(
             @RequestBody AuthenticateRequest request
     ) {
@@ -55,6 +56,17 @@ public class AuthenticationController {
 
         return ResponseHandler.response(response, HttpStatus.OK, false);
     }
+
+    @Operation(summary = "register", description = "Đăng ký")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    content = @Content(
+                            schema = @Schema(implementation = AuthenticateResponse.class),
+                            mediaType = "application/json"
+                    )
+            )
+    })
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
