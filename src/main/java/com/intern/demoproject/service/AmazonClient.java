@@ -62,6 +62,13 @@ public class AmazonClient {
         s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
+
+
+    public void deleteFileFromS3Bucket(String fileUrl) {
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        s3client.deleteObject(bucketName, fileName);
+    }
+
     public String uploadFile(MultipartFile multipartFile, String fileName) {
         try {
             File file = convertFile(multipartFile);

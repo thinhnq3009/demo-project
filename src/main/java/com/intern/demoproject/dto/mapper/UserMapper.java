@@ -12,11 +12,14 @@ public class UserMapper implements Function<User, UserDto> {
 
     @Override
     public UserDto apply(User user) {
-        return new UserDto(
-                user.getId(),
-                user.getUsername(),
-                user.getFullname(),
-                user.getEmail()
-        );
+        return UserDto
+                .builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .avatar(user.getAvatar())
+                .role(user.getRole().name())
+                .fullname(user.getFullname())
+                .username(user.getUsername())
+                .build();
     }
 }

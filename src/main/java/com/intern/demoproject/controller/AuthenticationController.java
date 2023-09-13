@@ -1,6 +1,7 @@
 package com.intern.demoproject.controller;
 
 import com.intern.demoproject.dto.AuthenticateResponse;
+import com.intern.demoproject.dto.commom.CustomResponseEntity;
 import com.intern.demoproject.dto.commom.ResponseHandler;
 import com.intern.demoproject.request.AuthenticateRequest;
 import com.intern.demoproject.request.RegisterRequest;
@@ -48,13 +49,15 @@ public class AuthenticationController {
 
     })
 
-    public ResponseEntity<?> login(
+    public CustomResponseEntity<AuthenticateResponse> login(
             @RequestBody AuthenticateRequest request
     ) {
 
         AuthenticateResponse response = authService.login(request);
 
-        return ResponseHandler.response(response, HttpStatus.OK, false);
+        return CustomResponseEntity
+                .of(response, HttpStatus.OK)
+                .result(true);
     }
 
     @Operation(summary = "register", description = "Đăng ký")
@@ -69,11 +72,14 @@ public class AuthenticationController {
     })
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(
+    public CustomResponseEntity<AuthenticateResponse> register(
             @RequestBody RegisterRequest request
     ) {
         AuthenticateResponse response = authService.register(request);
 
-        return ResponseHandler.response(response, HttpStatus.OK, true);
+
+        return CustomResponseEntity
+                .of(response, HttpStatus.OK)
+                .result(true);
     }
 }

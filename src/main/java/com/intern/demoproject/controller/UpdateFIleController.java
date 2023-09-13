@@ -1,5 +1,6 @@
 package com.intern.demoproject.controller;
 
+import com.intern.demoproject.dto.commom.CustomResponseEntity;
 import com.intern.demoproject.service.AmazonClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,9 @@ public class UpdateFIleController {
     private final AmazonClient amazonClient;
 
     @PostMapping()
-    public ResponseEntity<?> uploadFile(
+    public CustomResponseEntity<String> uploadFile(
             @RequestPart(value = "file") MultipartFile file) {
         String path = amazonClient.uploadFile(file);
-        return ResponseEntity.ok(path);
+        return CustomResponseEntity.of(path);
     }
 }

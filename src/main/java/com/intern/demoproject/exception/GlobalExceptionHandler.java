@@ -1,4 +1,4 @@
-package com.intern.demoproject.exception.commom;
+package com.intern.demoproject.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+import static com.intern.demoproject.utils.Constants.User.DEFAULT_AVATAR;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -29,10 +31,13 @@ public class User implements UserDetails {
     private String username;
 
     @Column(length = 50)
-    private String fullname;
+    private String fullname; // Can update
 
     @Column(length = 50)
-    private String email;
+    private String email; // Can update
+
+    @Column(length = 250)
+    private String avatar;
 
     @Column(length = 250)
     private String password;
@@ -40,6 +45,15 @@ public class User implements UserDetails {
     @Column(length = 50)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.role == null)
+            this.role = Role.USER;
+        if (this.avatar == null || this.avatar.isEmpty())
+            this.avatar = DEFAULT_AVATAR;
+    }
 
 
     @Override
