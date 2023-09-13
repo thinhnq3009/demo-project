@@ -34,11 +34,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        "/**",
-                                        "/api/auth/**",
-                                        "/api/v1/upload",
-                                        "/api/users", "/api/users/**")
+                                        "/api/v1/auth/**")
                                 .permitAll()
+                                .requestMatchers(
+                                        "/api/v1/**",
+                                        "/api/v1/avatar/**",
+                                        "/api/v1/users/**"
+                                ).hasAuthority("USER")
                 )
                 .authenticationProvider(authenticationProvider)
                 .sessionManagement(

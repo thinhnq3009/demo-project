@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static com.intern.demoproject.utils.Constants.AuthPaths.AUTH_PATH;
+
 @Controller
-@RequestMapping("/api/auth")
+@RequestMapping(AUTH_PATH)
 @RequiredArgsConstructor
 @Tag(name = "AuthenticationController", description = "Authentication controller")
 public class AuthenticationController {
@@ -48,7 +50,6 @@ public class AuthenticationController {
             )
 
     })
-
     public CustomResponseEntity<AuthenticateResponse> login(
             @RequestBody AuthenticateRequest request
     ) {

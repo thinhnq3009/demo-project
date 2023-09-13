@@ -115,7 +115,7 @@ public class UserController {
     /**
      * Update avatar
      */
-    @PutMapping("/{id}/avatar")
+    @PutMapping("/avatar/{id}")
     @Operation(summary = "updateAvatar", description = "Update avatar by id")
     @ApiResponses({
             @ApiResponse(

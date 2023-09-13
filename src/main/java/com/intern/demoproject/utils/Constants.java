@@ -17,6 +17,12 @@ public class Constants {
 
     }
 
+    public static class AuthPaths {
+
+        public static final String AUTH_PATH = BASE_PATH + "/auth";
+
+    }
+
     public static class  UserPaths {
 
         public static final String USER_PATH = BASE_PATH + "/users";

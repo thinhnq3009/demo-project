@@ -76,7 +76,7 @@ public class JwtService {
             user.setFullname(claims.get("fullname").toString());
             user.setEmail(claims.get("email").toString());
             user.setRole(Role.valueOf(claims.get("role").toString()));
-
+            user.setUsername(claims.getSubject());
         } catch (Exception e) {
             return null;
         }
