@@ -15,16 +15,14 @@ public class AuthenticateMapper implements Function<User, AuthenticateResponse> 
 
     private final JwtService jwtService;
 
-    private final UserMapper userMapper;
-
     @Override
     public AuthenticateResponse apply(User user) {
-        UserDto userDto = userMapper.apply(user);
-        return new AuthenticateResponse(userDto)
-                .token(
-                        jwtService.generateToken(user)
-                );
+        return AuthenticateResponse
+                .builder()
+                .fullname(user.getFullname())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .token(jwtService.generateToken(user))
+                .build();
     }
-
-
 }

@@ -12,8 +12,29 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.SQLServer2012Dialect
                 format_sql: true
+    mail:
+        host: email-smtp.us-east-1.amazonaws.com
+        port: 587
+        username: <username>
+        password: <password>
+        properties:
+            mail:
+                transport:
+                    protocol: smtp
+                smtp:
+                    port: 587
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+from:
+    email: tom@thomasjayconsulting.com
+    name: Thomas Jay Consulting
 amazonProperties:
     endpointUrl: https://s3.ap-southeast-2.amazonaws.com
     accessKey: AKIAQJCAOEOOGEIUYB7B
     secretKey: 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
     bucketName: storagefpl
+    region: ap-southeast-2
+server:
+    port: 8888

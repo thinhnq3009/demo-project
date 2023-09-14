@@ -1,15 +1,15 @@
 package com.intern.demoproject.dto.commom;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
-import java.util.Date;
-
+@RequiredArgsConstructor
+@Builder
 @Setter
 @Getter
-@Builder
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class ResponseObject<T> {
     String message;
 
@@ -19,12 +19,9 @@ public class ResponseObject<T> {
 
     boolean result;
 
-    Date timestamp = new Date();
-
     public ResponseObject(T body, HttpStatus status) {
         this.data = body;
         this.status = status.toString();
         this.result = status.is2xxSuccessful();
-        this.timestamp = new Date();
     }
 }

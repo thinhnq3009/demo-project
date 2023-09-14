@@ -1,10 +1,12 @@
 package com.intern.demoproject.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
@@ -17,8 +19,5 @@ public class UserDto {
 
     private String email;
 
-    private String avatar;
-
-    private String role;
 
 }
