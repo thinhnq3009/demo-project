@@ -2,7 +2,9 @@ package com.intern.demoproject.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.intern.demoproject.dto.UserDto;
+import com.intern.demoproject.dto.commom.CustomResponseEntity;
 import com.intern.demoproject.dto.commom.ResponseHandler;
+import com.intern.demoproject.service.ImageService;
 import com.intern.demoproject.service.UserService;
 import com.intern.demoproject.utils.Constants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,11 +13,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Arrays;
 
 import static com.intern.demoproject.utils.Constants.UserPaths.USER_PATH;
 
@@ -27,7 +33,12 @@ public class UserController {
 
     private final UserService userService;
 
+    private final ImageService imageService;
 
+
+    /**
+     * Lấy danh sách user có trong database theo phân trang
+     */
     @GetMapping("")
     @Operation(summary = "Get all users", description = "Get all users")
     @ApiResponses({
@@ -40,17 +51,21 @@ public class UserController {
                                     mediaType = "application/json")
                     })
     })
-    public ResponseEntity<?> getUsers(
+    public CustomResponseEntity<UserDto[]> getUsers(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size
     ) {
 
         Page<UserDto> users = userService.findUser(page, size);
 
-        return ResponseHandler.response(users.toList(), HttpStatus.OK, users.hasNext());
+        return CustomResponseEntity
+                .of(users.stream().toArray(UserDto[]::new))
+                .message("Get all users success!!!)");
     }
 
-
+    /**
+     * Lấy user theo id
+     */
     @GetMapping("/{id}")
     @Operation(summary = "getUserById", description = "Find <User> by id")
     @ApiResponses({
@@ -62,18 +77,21 @@ public class UserController {
                     )
             )
     })
-    public ResponseEntity<?> getUser(
+    public CustomResponseEntity<UserDto> getUser(
             @PathVariable Long id
     ) {
 
         UserDto user = userService.findUserById(id);
 
-        return ResponseHandler.response(user, HttpStatus.OK, true);
+        return CustomResponseEntity.of(user, HttpStatus.OK);
     }
 
-
+    /**
+     * Cập nhật user theo id
+     * @return
+     */
     @PutMapping("/{id}")
-    @Operation(summary = "updateUser", description = "Update <User> by id")
+    @Operation(summary = "updateInfoUser", description = "Update fullname email by id")
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
@@ -83,18 +101,16 @@ public class UserController {
                     )
             )
     })
-
-    public ResponseEntity<?> updateUser(
+    public CustomResponseEntity<UserDto> updateInfoUser(
             @PathVariable Long id,
             @RequestBody UserDto userDto
     ) {
 
         UserDto user = userService.updateUser(id, userDto);
 
-        return ResponseHandler.response(user, HttpStatus.OK, true);
+        return CustomResponseEntity.of(user, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
 
     /**
      * Update avatar
@@ -122,6 +138,4 @@ public class UserController {
                 .message("Update avatar success!!!");
 
     }
-=======
->>>>>>> parent of a9d4a3b (UpUpdate vavatar endpoint)
 }

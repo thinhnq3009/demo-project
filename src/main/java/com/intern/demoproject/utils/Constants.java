@@ -29,6 +29,10 @@ public class Constants {
 
     }
 
+    public static class User {
+        public static final String DEFAULT_AVATAR = "https://i.imgur.com/6VBx3io.png";
+    }
+
 
 
 
